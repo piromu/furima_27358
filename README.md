@@ -43,10 +43,10 @@
 |------|----|-------|
 |last_name|string|null: false|
 |first_name|string|null: false|
-|last_name_kana|string|null: false|
-|first_name_kana|string|null: false|
-|post_code|string|null: false|
-|prefecture|string|null: false|
+|last_name_kana_id|integer|null: false|
+|first_name_kana_id|integer|null: false|
+|post_code_id|integer|null: false|
+|prefecture_id|integer|null: false|
 |city|string|null: false|
 |address|string|null: false|
 |building|string|
