@@ -11,7 +11,7 @@
 |first_name|string|null: false|
 |last_name_kana|string|null: false|
 |first_name_kana|string|null: false|
-|birthday|date|null: false|
+|birthday|integer|null: false|
 
 
 ### Association
@@ -24,7 +24,7 @@
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
-|explanation|string|null: false|
+|explanation|text|null: false|
 |price|string|null: false|
 |condition|string|null: false|
 |image|string|null: false|
@@ -58,18 +58,6 @@
 ### Association
 - belongs_to :user
 
-## cardsテーブル
-
-|Column|Type|Options|
-|------|----|-------|
-|card_id|string|null: false|
-|security|string|null: false|
-|month|string|null: false|
-|year|string|null: false|
-
-
-### Association
-- belongs_to :user
 
 ## categoriesテーブル
 
