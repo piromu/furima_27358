@@ -27,11 +27,11 @@
 |explanation|text|null: false|
 |price|string|null: false|
 |condition|string|null: false|
-|image|string|null: false|
-|size|string|
-|customer_id|string|null: false, foreign_key: true|
-|user_id|string|null: false, foreign_key: true|
-|category_id|string|null: false, foreign_key: true|
+|image|integer|null: false|
+|size|integer|
+|customer_id|references|null: false, foreign_key: true|
+|user_id|references|null: false, foreign_key: true|
+|category_id|references|null: false, foreign_key: true|
 
 
 ### Association
@@ -42,7 +42,7 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|user_id|string|null: false, foreign_key: true|
+|user_id|reference|null: false, foreign_key: true|
 |last_name|string|null: false|
 |first_name|string|null: false|
 |last_name_kana|string|null: false|
@@ -72,9 +72,9 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|user_id|string|null: false, foreign_key: true|
-|item_id|string|null: false, foreign_key: true|
-|comment|string|
+|user_id|reference|null: false, foreign_key: true|
+|item_id|reference|null: false, foreign_key: true|
+|comment|text|
 
 ### Association
 - belongs_to :item
