@@ -15,9 +15,8 @@
 
 
 ### Association
-- belongs_to :customer
 - belongs_to :card
-- has_many :items, through: :comments
+- has_many :items
 
 ## itemsテーブル
 
@@ -29,9 +28,9 @@
 |condition|string|null: false|
 |image|integer|null: false|
 |size|integer|
-|customer_id|references|null: false, foreign_key: true|
-|user_id|references|null: false, foreign_key: true|
-|category_id|references|null: false, foreign_key: true|
+|customer|references|null: false, foreign_key: true|
+|user|references|null: false, foreign_key: true|
+|category|references|null: false, foreign_key: true|
 
 
 ### Association
@@ -42,7 +41,7 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|user_id|reference|null: false, foreign_key: true|
+|user|reference|null: false, foreign_key: true|
 |last_name|string|null: false|
 |first_name|string|null: false|
 |last_name_kana|string|null: false|
@@ -72,8 +71,8 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|user_id|reference|null: false, foreign_key: true|
-|item_id|reference|null: false, foreign_key: true|
+|user|references|null: false, foreign_key: true|
+|item|references|null: false, foreign_key: true|
 |comment|text|
 
 ### Association
