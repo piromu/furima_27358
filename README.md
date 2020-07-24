@@ -24,8 +24,9 @@
 |------|----|-------|
 |name|string|null: false|
 |explanation|text|null: false|
-|price|string|null: false|
-|condition|string|null: false|
+|price_id|integer|null: false|
+|condition_id|integer|null: false|
+|postage_id|integer|null: false|
 |image|string|null: false|
 |size|string|
 |customer|references|null: false, foreign_key: true|
@@ -47,6 +48,7 @@
 |first_name_kana_id|integer|null: false|
 |post_code_id|integer|null: false|
 |prefecture_id|integer|null: false|
+|shipping_id|integer|null: false|
 |city|string|null: false|
 |address|string|null: false|
 |building|string|
