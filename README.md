@@ -15,7 +15,8 @@
 
 
 ### Association
-- has_many :items, through: comments
+- has_many :items
+- has_many :comments
 
 ## itemsテーブル
 
@@ -25,8 +26,8 @@
 |explanation|text|null: false|
 |price|string|null: false|
 |condition|string|null: false|
-|image|integer|null: false|
-|size|integer|
+|image|string|null: false|
+|size|string|
 |customer|references|null: false, foreign_key: true|
 |user|references|null: false, foreign_key: true|
 |category|references|null: false, foreign_key: true|
@@ -34,7 +35,7 @@
 
 ### Association
 - belongs_to :category
-- has_many :users, through: :comments
+- has_many :users
 
 ## customersテーブル
 
