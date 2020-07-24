@@ -17,6 +17,7 @@
 ### Association
 - has_many :items
 - has_many :comments
+- has_many :managements
 
 ## itemsテーブル
 
@@ -36,6 +37,7 @@
 
 ### Association
 - belongs_to :category
+- belongs_to :management
 - has_many :users
 
 ## customersテーブル
@@ -46,7 +48,7 @@
 |first_name|string|null: false|
 |last_name_kana_id|integer|null: false|
 |first_name_kana_id|integer|null: false|
-|post_code_id|integer|null: false|
+|post_code|integer|null: false|
 |prefecture_id|integer|null: false|
 |shipping_id|integer|null: false|
 |city|string|null: false|
@@ -75,6 +77,17 @@
 |user|references|null: false, foreign_key: true|
 |item|references|null: false, foreign_key: true|
 |comment|text|
+
+### Association
+- belongs_to :item
+- belongs_to :user
+
+## managementテーブル
+
+|Column|Type|Options|
+|------|----|-------|
+|user|references|null: false, foreign_key: true|
+|item|references|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :item
