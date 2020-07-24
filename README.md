@@ -15,8 +15,7 @@
 
 
 ### Association
-- belongs_to :card
-- has_many :items
+- has_many :items, through: comments
 
 ## itemsテーブル
 
@@ -41,7 +40,6 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|user|reference|null: false, foreign_key: true|
 |last_name|string|null: false|
 |first_name|string|null: false|
 |last_name_kana|string|null: false|
