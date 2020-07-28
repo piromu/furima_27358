@@ -4,7 +4,7 @@ describe User do
   describe '#create' do
     before do
       @user = FactoryBot.build(:user)
-      # @user = FactoryBot.create(:user)
+      
     end
     # 1. nicknameとemail、passwordとpassword_confirmation,first_name,:last_name,:last_name_kana,:first_name_kana,:birthdayが存在すれば登録できること
     it "is valid with a nickname, email, password, password_confirmation,first_name,:last_name,:last_name_kana,:first_name_kana,:birthday" do
@@ -59,8 +59,5 @@ describe User do
       @user.valid?
       expect(@user.errors[:password]).to include("is too short (minimum is 6 characters)")
     end
-
-
-    
   end
 end
