@@ -8,8 +8,13 @@ class User < ApplicationRecord
   has_many :managements
   with_options presence: true do
     validates :nickname, format: { with: /\A[a-zぁ-んァ-ン一-龥]/, message: "is invalid. Input full-width characters."}
-    
-    #validates :name_reading, format: { with: /\A[ァ-ヶー－]+\z/, message: "is invalid. Input full-width katakana characters."}
-    #validates :nickname, format: { with: /\A[a-z0-9]+\z/i, message: "is invalid. Input half-width characters."}
+   
+  end
+
+  after_validation :check_attributes
+
+  private
+  def check_attributes
+  
   end
 end

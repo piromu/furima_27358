@@ -22,21 +22,21 @@
 ## itemsテーブル
 
 |Column|Type|Options|
-|------|----|-------|
-|name|string|null: false|
-|explanation|text|null: false|
-|price_id|integer|null: false|
-|condition_id|integer|null: false|
-|postage_id|integer|null: false|
-|image|string|null: false|
-|size|string|
-|customer|references|null: false, foreign_key: true|
-|user|references|null: false, foreign_key: true|
-|category|references|null: false, foreign_key: true|
+|-------------|------|----------|
+|name|string|null:false|
+|introduction|text|null:false|
+|category_id|integer|null:false, foreign_key:true|
+|condition|integer|null:false|
+|price|integer|null:false|
+|delivery_fee|integer|null:false|
+|delivery_days|integer|null:false|
+|prefecture_id|integer|null:false|
+|user|references|foreign_key:true|
 
 
 ### Association
-- belongs_to :category
+- belongs_to_active_hash :category_id
+- belongs_to_active_hash :prefecture_id
 - belongs_to :management
 - has_many :users
 
@@ -61,14 +61,6 @@
 - belongs_to :item
 
 
-## categoriesテーブル
-
-|Column|Type|Options|
-|------|----|-------|
-|category|string|null: false|
-
-### Association
-- has_many :items
 
 ## commentsテーブル
 
