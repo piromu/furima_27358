@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_item, only:  :show
 
   def index
     @items = Item.all.order(id: "DESC")
@@ -36,5 +37,9 @@ class ItemsController < ApplicationController
     :prefecture_id,
     images: [])
     .merge(user_id: current_user.id)
+  end
+
+  def set_item
+    @item = Item.find_by(id: params[:id])
   end
 end
