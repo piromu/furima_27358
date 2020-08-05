@@ -4,6 +4,7 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :user
   has_one_attached :image
+  has_one :management
 
   validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: 'が設定可能範囲を超えています' }
   with_options presence: true do

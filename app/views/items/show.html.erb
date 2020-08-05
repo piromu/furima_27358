@@ -1,53 +1,45 @@
 <%= render "shared/header" %>
 
 <%# 商品の概要 %>
-
 <div class="item-show">
   <div class="item-box">
     <h2 class="name">
-      <%= @item.name %>
+      <%= Item.name %>
     </h2>
     <div class='item-img-content'>
-
-      <%= image_tag @item.image,class:"item-box-img" %>
-
-    
-     <% if user_signed_in? && current_user.id == @item.user_id %>
-      <div class='sold-out'>
-        <span>Sold Out!!</span>
-      </div>
-     <% end %>
-
+      <% if @item.images.attached? %>
+        <% @item.images.first(1).each do |image| %>
+          <%= image_tag @item.image, class:'item-box-img', id:"item-box-img" %>
+        <% end %>
+      <% end %>
+      <% if @item.management.present? %>
+        <div class='sold-out'>
+          <span>Sold Out!!</span>
+        </div>
+      <% end %>
     </div>
     <div class="item-price-box">
       <span class="item-price">
-      <%= @item.price%>
+        ¥ <%= @item.price %>
       </span>
       <span class="item-postage">
         (税込) 送料込み
       </span>
-    </div> 
-
-  <% if user_signed_in?  && current_user.id == @item.user.id%>
-
-    <%= link_to '商品の編集', "/items/#{@item.id}/edit", method: :get, class: "item-red-btn" %>
-
-    <p class='or-text'>or</p>
-  
-    <%= link_to '削除', "/items/#{@item.id}", method: :delete, class:'item-destroy' %>
+    </div>
+    <% if user_signed_in? and current_user.id == @item.user_id %>
+      <%= link_to '商品の編集', edit_item_path(@item), method: :get, class: "item-red-btn" %>
+      <p class='or-text'>or</p>
+      <%= link_to '削除', item_path(@item), method: :delete, class:'item-destroy' %>
+    <% elsif user_signed_in? %>
+    <%# 商品が売れていない場合はこちらを表示しましょう %>
+      <% unless @item.management.present? %>
+        <%= link_to '購入画面に進む', item_managements_path(@item),class:"item-red-btn"%>
+      <% end %>
+    <%# //商品が売れていない場合はこちらを表示しましょう %>
     <% end %>
-     <%if @item.persisted? %>
-    
-  <% if user_signed_in? && current_user.id != @item.user_id %>
-    
-    <%= link_to '購入画面に進む', "/items/#{@item.id}/item_purchases" ,class:"item-red-btn"%>
-     <% end %>
-  <% end %> 
-  
-  <% if user_signed_in?  && current_user.id != @item.user.id%>
- 
+
     <div class="item-explain-box">
-      <span><%= @item.text %></span>
+      <span><%= @item.introduction %></span>
     </div>
     <table class="detail-table">
       <tbody>
@@ -57,23 +49,23 @@
         </tr>
         <tr>
           <th class="detail-item">カテゴリー</th>
-          <td class="detail-value"><%= @item.category.type %></td>
+          <td class="detail-value"><%= @item.category.name %></td>
         </tr>
         <tr>
           <th class="detail-item">商品の状態</th>
-          <td class="detail-value"><%= @item.status.beauty %></td>
+          <td class="detail-value"><%= @item.condition %></td>
         </tr>
         <tr>
           <th class="detail-item">配送料の負担</th>
-          <td class="detail-value"><%= @item.cost_weight.delivery %></td>
+          <td class="detail-value"><%= @item.delivery_fee %></td>
         </tr>
         <tr>
           <th class="detail-item">発送元の地域</th>
-          <td class="detail-value"><%= @item.prefecture.capital %></td>
+          <td class="detail-value"><%= @item.prefecture.name %></td>
         </tr>
         <tr>
           <th class="detail-item">発送日の目安</th>
-          <td class="detail-value"><%= @item.cost_day.about %></td>
+          <td class="detail-value"><%= @item.delivery_days %></td>
         </tr>
       </tbody>
     </table>
@@ -86,11 +78,10 @@
         <%= image_tag "flag.png" ,class:"report-flag-icon" ,width:"20",height:"20"%>
         <span>不適切な商品の通報</span>
       </div>
-     </div>
     </div>
-  <% end %>
+  </div>
   <%# /商品の概要 %>
- 
+
   <div class="comment-box">
     <form>
       <textarea class="comment-text"></textarea>
@@ -113,7 +104,7 @@
       後ろの商品 ＞
     </a>
   </div>
-  <a href="#" class='another-item'><%= "商品名" %>をもっと見る</a>
+  <a href="#" class='another-item'><%= "商品のカテゴリー名" %>をもっと見る</a>
 </div>
 
 <%= render "shared/footer" %>
