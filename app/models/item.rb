@@ -1,41 +1,31 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :category
-  belongs_to :prefecture
-  belongs_to :user
-  has_one_attached :image
-  has_one :management
 
-  validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: 'が設定可能範囲を超えています' }
   with_options presence: true do
-    validates :image
-    validates :name
-    validates :introduction
-    validates :condition
-    validates :price
-    validates :delivery_fee
-    validates :delivery_days
+    validates :name,  length: { maximum: 40 } 
+    validates :text,  length: { maximum: 1000 } 
+    validates :price, presence: true, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: "is out of setting range"}
+    with_options numericality: { other_than: 1 } do
+      validates :category_id
+      validates :condition_id
+      validates :including_postage_id
+      validates :consignor_location_id
+      validates :ready_time_id
+    end
   end
-  with_options numericality: { other_than: 0, message: 'を選択してください' } do
-    validates :category_id
-    validates :prefecture_id
+  validate :image_presence
+
+  has_one_attached :image
+  belongs_to_active_hash :category
+  belongs_to_active_hash :condition
+  belongs_to_active_hash :including_postage
+  belongs_to_active_hash :prefecture
+  belongs_to_active_hash :ready_time
+  belongs_to :user
+
+  def image_presence
+    errors.add(:image, 'must be attached') unless image.attached?
   end
 
-  enum condition: {
-    '新品同様': 0,
-    '未使用に近い': 1,
-    '目立った傷や汚れなし': 2,
-    'やや傷や汚れあり': 3,
-    '傷や汚れあり': 4,
-    '全体的に状態が悪い': 5
-  }
-  enum delivery_fee: {
-    '送料込み（出品者負担）': 0,
-    '着払い（購入者負担）': 1
-  }
-  enum delivery_days: {
-    '1~2日で発送': 0,
-    '2~3日で発送': 1,
-    '4~7日で発送': 2
-  }
+  has_one :item_order, dependent: :destroy
 end

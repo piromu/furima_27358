@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :items
   has_many :comments
-  has_many :managements
+  has_many :item_orders
   with_options presence: true do
     validates :nickname, format: { with: /\A[a-zぁ-んァ-ン一-龥]/, message: "is invalid. Input full-width characters."}
    

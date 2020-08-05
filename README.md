@@ -1,86 +1,61 @@
-# README
+# テーブル設計
 
-## usersテーブル
-
-|Column|Type|Options|
-|------|----|-------|
-|nickname|string|null: false|
-|email|string|null: false, unique: true|
-|password|string|null: false|
-|last_name|string|null: false|
-|first_name|string|null: false|
-|last_name_kana|string|null: false|
-|first_name_kana|string|null: false|
-|birthday|integer|null: false|
-
+## users テーブル
+| Column         | Type      | Options     |
+| -------------- | --------- | ----------- |
+| nickname       | string    | null: false |
+| email          | string    | null: false |
+| first_name     | string    | null: false |
+| last_name      | string    | null: false |
+| last_name_kana | string    | null: false |
+| first_name_kana| string    | null: false |
+| password       | string    | null: false |
+| birthday       | date      | null: false |
 
 ### Association
-- has_many :items
-- has_many :comments
-- has_many :managements
+- has_many :items, dependent: :destroy
+- has_many :item_orders, dependent: :destroy
 
-## itemsテーブル
-
-|Column|Type|Options|
-|-------------|------|----------|
-|name|string|null:false|
-|introduction|text|null:false|
-|category_id|integer|null:false, foreign_key:true|
-|condition|integer|null:false|
-|price|integer|null:false|
-|delivery_fee|integer|null:false|
-|delivery_days|integer|null:false|
-|prefecture_id|integer|null:false|
-|user|references|foreign_key:true|
-
+## items テーブル
+| Column             | Type      | Options    |
+| ------------------ | --------- | ---------- |
+| name               | string    | null:false |
+| text               | text      | null:false |
+| category           | integer   | null:false |
+| condition          | integer   | null:false |
+| including_postage  | integer   | null:false |
+| consignor_location | integer   | null:false |
+| ready_time         | integer   | null:false |
+| price              | integer   | null:false |
+| user_id            | references| null:false, foreign_key: true |
 
 ### Association
-- belongs_to_active_hash :category_id
-- belongs_to_active_hash :prefecture_id
-- belongs_to :management
-- has_many :users
-
-## customersテーブル
-
-|Column|Type|Options|
-|------|----|-------|
-|last_name|string|null: false|
-|first_name|string|null: false|
-|last_name_kana_id|integer|null: false|
-|first_name_kana_id|integer|null: false|
-|post_code|integer|null: false|
-|prefecture_id|integer|null: false|
-|shipping_id|integer|null: false|
-|city|string|null: false|
-|address|string|null: false|
-|building|string|
-|phone|string|null: false|
-
-
-### Association
-- belongs_to :item
-
-
-
-## commentsテーブル
-
-|Column|Type|Options|
-|------|----|-------|
-|user|references|null: false, foreign_key: true|
-|item|references|null: false, foreign_key: true|
-|comment|text|
-
-### Association
-- belongs_to :item
+- has_one :item_order, dependent: :destroy
 - belongs_to :user
 
-## managementテーブル
+## item_orders テーブル
 
-|Column|Type|Options|
-|------|----|-------|
-|user|references|null: false, foreign_key: true|
-|item|references|null: false, foreign_key: true|
+| Column         | Type      | Options     |
+| -------------- | --------- | ----------- |
+| user_id        | references| null: false, foreign_key: true |
+| item_id        | references| null: false, foreign_key: true |
 
 ### Association
-- belongs_to :item
+- has_one :address, dependent: :destroy
 - belongs_to :user
+- belongs_to :item
+
+## addresses テーブル
+
+| Column         | Type      | Options     |
+| -------------- | --------- | ----------- |
+| postal_code    | string    | null:false  |
+| prefecture     | integer   | null:false |
+| city           | string    | null:false |
+| house_number   | string    | null:false |
+| building_name  | string    |            |
+| phone number   | string    | null:false |
+| item_order_id  | references| null: false, foreign_key: true |
+
+### Association
+- belongs_to :item-order-id
