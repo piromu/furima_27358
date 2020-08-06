@@ -1,15 +1,14 @@
 FactoryBot.define do
   factory :item do
-    image
-    name{'test'}
-    introduction{'test'}
-    condition{1}
-    price{9999999}
-    delivery_fee{1}
+    name {Faker::Lorem.word}
+    text {Faker::Lorem.sentence}
+    category_id {2}
+    condition_id {2}
+    including_postage_id {2}
+    consignor_location_id {2}
+    ready_time_id {2}
+    price {1000}
     association :user
-    
-    trait :image do
-      image { fixture_file_upload(Rails.root.join('spec/fixtures/lea-232-black-lotus.jpg')) }
-    end
+    image { Rack::Test::UploadedFile.new(Rails.root.join('public/images/test_image.jpg'), 'image/jpeg') }
   end
-end 
+end

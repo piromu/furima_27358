@@ -1,75 +1,91 @@
 require 'rails_helper'
-
 RSpec.describe Item, type: :model do
   before do
     @item = FactoryBot.build(:item)
-  end 
-  
-  describe '商品を出品' do
-    context '出品できる', item_can_save: true do
-      it 'すべて正しい入力' do
-        item = build(:item)
-        item.valid?
-        expect(item).to be_valid
+  end
+
+  describe '商品新規登録' do
+    context '新規登録がうまくいくとき' do
+      it "商品詳細の全ての項目に正しい値、ファイルが登録されていれば新規登録できる" do
+        expect(@item).to be_valid
       end
     end
 
-    context '出品できない', item_cant_save: true do
-      it 'imageが空だと出品できない' do
-        item = build(:item, image: nil)
-        item.valid?
-        expect(item.errors[:image]).to include('can\'t be blank')
-      end
-      it 'nameが空だと出品できない' do
-        item = build(:item, name: nil)
-        item.valid?
-        expect(item.errors[:name]).to include('can\'t be blank')
-      end
-      it 'introductionがないと出品できない' do
-        item = build(:item, introduction: nil)
-        item.valid?
-        expect(item.errors[:introduction]).to include('can\'t be blank')
-      end
-      it 'categoryが空だと出品できない' do
-        item = build(:item, category_id: nil)
-        item.valid?
-        expect(item.errors[:category_id]).to include('を選択してください')
-      end
-      it 'conditionが空だと出品できない' do
-        item = build(:item, condition: nil)
-        item.valid?
-        expect(item.errors[:condition]).to include('can\'t be blank')
-      end
-      it 'dekivery_feeが空だと出品できない' do
-        item = build(:item, delivery_fee: nil)
-        item.valid?
-        expect(item.errors[:delivery_fee]).to include('can\'t be blank')
-      end
-      it 'delivery_daysが空だと出品できない' do
-        item = build(:item, delivery_days: nil)
-        item.valid?
-        expect(item.errors[:delivery_days]).to include('can\'t be blank')
-      end
-      it 'prefectureが空だと出品できない' do
-        item = build(:item, prefecture_id: nil)
-        item.valid?
-        expect(item.errors[:prefecture_id]).to include('を選択してください')
-      end
-      it 'priceが300~9999999の間で設定されていなければならない' do
-        item = build(:item, price: nil)
-        item.valid?
-        expect(item.errors[:price]).to include('can\'t be blank')
-      end
-      it 'priceが300未満では登録できないこと' do
-        @item.price = 299
+    context '新規登録がうまくいかないとき' do
+      it "商品画像がないと登録できない" do
+        @item.image = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
+        expect(@item.errors.full_messages).to include("Image must be attached")
       end
-  
-      it 'priceが9,999,999より大きいと登録できないこと' do
-        @item.price = 10_000_000
+      it "nameが空だと登録できない" do
+        @item.name = ""
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
+        expect(@item.errors.full_messages).to include("Name can't be blank")
+      end
+      it "nameが41文字以上だと登録できない" do
+        @item.name = "a" * 41
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Name is too long (maximum is 40 characters)")
+      end
+      it "textが空だと登録できない" do
+        @item.text = ""
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Text can't be blank")
+      end
+      it "textが1001文字以上だと登録できない" do
+        @item.text = "a" * 1001
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Text is too long (maximum is 1000 characters)")
+      end
+      it "category_idが空だと登録できない" do
+        @item.category_id = ""
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category can't be blank")
+      end
+      it "category_idが1だと登録できない" do
+        @item.category_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category must be other than 1")
+      end
+      it "condition_idが空だと登録できない" do
+        @item.condition_id = ""
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Condition can't be blank")
+      end
+      it "condition_idが1だと登録できない" do
+        @item.condition_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Condition must be other than 1")
+      end
+      it "including_postage_idが空だと登録できない" do
+        @item.including_postage_id = ""
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Including postage can't be blank")
+      end
+      it "including_postage_idが1だと登録できない" do
+        @item.including_postage_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Including postage must be other than 1")
+      end
+      it "consignor_location_idが空だと登録できない" do
+        @item.consignor_location_id = ""
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Consignor location can't be blank")
+      end
+      it "consignor_location_idが1だと登録できない" do
+        @item.consignor_location_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Consignor location must be other than 1")
+      end
+      it "ready_time_idが空だと登録できない" do
+        @item.ready_time_id = ""
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Ready time can't be blank")
+      end
+      it "ready_time_idが1だと登録できない" do
+        @item.ready_time_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Ready time must be other than 1")
       end
     end
   end
