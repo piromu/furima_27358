@@ -62,6 +62,11 @@ RSpec.describe Address, type: :model do
          @address.valid?
          expect(@address.errors.full_messages).to include("Phone number is invalid. Input half-width numbers without hyphen")
        end
+       it "house_numberが空だと保存できない" do
+         @address.house_number = ""
+         @address.valid?
+         expect(@address.errors.full_messages).to include("House number can't be blank")
+      end
      end
    end
  end 
