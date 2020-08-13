@@ -1,6 +1,7 @@
 class TransactionsController < ApplicationController
   before_action :set_item
   before_action :sold_out?
+  before_action :authenticate_user!
 
   def index
     @item_order = ItemOrder.new
