@@ -56,10 +56,14 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'active_hash'
 gem 'devise'
 gem 'pry-rails'
-gem 'rspec-rails', '~> 4.0.0.beta2'
-gem 'factory_bot_rails'
 gem 'mini_magick'
 gem 'jquery-rails'
 group :production do
   gem 'rails_12factor'
+end
+gem 'payjp'
+group :development, :test do
+  gem 'rspec-rails', '~> 4.0.0.beta2'
+  gem 'factory_bot_rails'
+  gem 'faker', "~> 2.8"
 end
